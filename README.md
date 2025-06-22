@@ -1,6 +1,6 @@
-## ImmuScope: Self-iterative multiple instance learning enables the prediction of CD4<sup>+</sup> T cell immunogenic epitopes
+## ImmuScope: Self-iterative multiple-instance learning enables the prediction of CD4<sup>+</sup> T cell immunogenic epitopes
 
-This repository contains the source code for the paper **[Self-iterative multiple instance learning enables the prediction of CD4<sup>+</sup> T cell immunogenic epitopes](https://doi.org/10.1101/2025.02.02.636141)**.
+This repository contains the source code for the paper **[Self-iterative multiple-instance learning enables the prediction of CD4<sup>+</sup> T cell immunogenic epitopes](https://doi.org/10.1101/2025.02.02.636141)**.
 
 - [Overview](#overview)
 - [Installation](#installation)
@@ -140,7 +140,7 @@ The ImmuScope manuscript is available on [bioRxiv](https://doi.org/10.1101/2025.
 ```tex
 @article {Shen2025.02.02.636141,
 	author = {Shen, Long-Chen and Zhang, Yumeng and Wang, Zhikang and Littler, Dene R. and Yan, Liu and Tang, Jinhui and Rossjohn, Jamie and Yu, Dong-Jun and Song, Jiangning},
-	title = {Self-iterative multiple instance learning enables the prediction of CD4+ T cell immunogenic epitopes},
+	title = {Self-iterative multiple-instance learning enables the prediction of CD4+ T cell immunogenic epitopes},
 	year = {2025},
 	doi = {10.1101/2025.02.02.636141},
 	publisher = {Cold Spring Harbor Laboratory},
