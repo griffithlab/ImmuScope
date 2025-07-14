@@ -136,15 +136,14 @@ ImmuScope/
   ```
 
 ## Citation
-The ImmuScope manuscript is available on [bioRxiv](https://doi.org/10.1101/2025.02.02.636141). If you use ImmuScope in your work, please cite our paper.
 ```tex
-@article {Shen2025.02.02.636141,
-	author = {Shen, Long-Chen and Zhang, Yumeng and Wang, Zhikang and Littler, Dene R. and Yan, Liu and Tang, Jinhui and Rossjohn, Jamie and Yu, Dong-Jun and Song, Jiangning},
-	title = {Self-iterative multiple-instance learning enables the prediction of CD4+ T cell immunogenic epitopes},
-	year = {2025},
-	doi = {10.1101/2025.02.02.636141},
-	publisher = {Cold Spring Harbor Laboratory},
-	journal = {bioRxiv}
+@article{shen2025self,
+  title={Self-iterative multiple-instance learning enables the prediction of CD4+ T cell immunogenic epitopes},
+  author={Shen, Long-Chen and Zhang, Yumeng and Wang, Zhikang and Littler, Dene R and Liu, Yan and Tang, Jinhui and Rossjohn, Jamie and Yu, Dong-Jun and Song, Jiangning},
+  journal={Nature Machine Intelligence},
+  pages={1--16},
+  year={2025},
+  publisher={Nature Publishing Group UK London}
 }
 ```
 
