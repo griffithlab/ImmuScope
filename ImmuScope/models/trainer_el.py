@@ -333,7 +333,7 @@ class Trainer(object):
 
     def load_model(self, model_path=None):
         path = model_path if model_path is not None else self.model_path
-        checkpoint = torch.load(path)
+        checkpoint = torch.load(path, map_location=self.device)
         self.model.load_state_dict(checkpoint['model_state_dict'], strict=False)
         self.logger.info(f'==== Model loaded from {path} ====')
 
