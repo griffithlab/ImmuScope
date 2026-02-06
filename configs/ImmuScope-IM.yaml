@@ -1,5 +1,5 @@
 name: ImmuScope-IM
-path: weights
+path: /opt/ImmuScope/weights
 seed: 2024
 
 model:
