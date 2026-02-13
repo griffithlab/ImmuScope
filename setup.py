@@ -18,9 +18,7 @@ setup(
     include_package_data=True,
     python_requires=">=3.9",
     install_requires=[
-        "click>=8.0.0",
         "torch>=1.12",
-        "ruamel.yaml>=0.17.21",
     ],
     project_urls={
         "Upstream": "https://github.com/shenlongchen/ImmuScope",
