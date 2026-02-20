@@ -1,0 +1,2 @@
+# Include non-Python package data in sdists
+recursive-include ImmuScope *.dat

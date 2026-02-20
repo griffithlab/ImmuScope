@@ -36,6 +36,7 @@ from ImmuScope.utils.data_utils import get_mhc_name_seq, get_peptide_embedding
 DEFAULT_WEIGHTS_DIR = "/opt/ImmuScope/weights"
 DEFAULT_MODEL_NAME = "ImmuScope-IM"
 DEFAULT_SCORE_COL = "ImmuScope_IM"
+DEFAULT_MHC_PSEUDOSEQ_FILE = str(Path(__file__).resolve().parent / "pseudosequence.2023.dat")
 
 
 @dataclass(frozen=True)
@@ -306,7 +307,16 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 
     p = argparse.ArgumentParser(description="Score peptide+allele pairs with ImmuScope-IM pretrained weights")
 
-    io = p.add_mutually_exclusive_group(required=True)
+    p.add_argument(
+        "--list-alleles",
+        action="store_true",
+        help=(
+            "List supported allele names (derived from the pseudosequence mapping file) and exit. "
+            "This doesn't require model weights."
+        ),
+    )
+
+    io = p.add_mutually_exclusive_group(required=False)
     io.add_argument("--input", help="Input TSV with columns for allele and peptide")
     io.add_argument("--allele", help="Allele for single-pair scoring")
 
@@ -317,14 +327,29 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 
     p.add_argument(
         "--mhc-pseudoseq-file",
-        required=True,
-        help="File mapping allele -> pseudo-sequence (two whitespace-separated columns)",
+        default=DEFAULT_MHC_PSEUDOSEQ_FILE,
+        help=(
+            "File mapping allele -> pseudo-sequence (two whitespace-separated columns). "
+            "Default: bundled pseudosequence.2023.dat next to this wrapper."
+        ),
     )
     p.add_argument("--allele-col", default="allele", help="Allele column name in input TSV")
     p.add_argument("--peptide-col", default="peptide", help="Peptide column name in input TSV")
     p.add_argument("--batch-size", type=int, default=256)
 
     args = p.parse_args(list(argv) if argv is not None else None)
+
+    if args.list_alleles:
+        mhc_name_seq = get_mhc_name_seq(str(args.mhc_pseudoseq_file))
+        try:
+            for allele in sorted(mhc_name_seq.keys()):
+                print(allele)
+        except BrokenPipeError:
+            return 0
+        return 0
+
+    if not args.input and not args.allele:
+        p.error("one of the arguments --input --allele is required")
 
     if args.input:
         pairs, rows = _read_pairs_tsv(
@@ -359,8 +384,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     results = score_pairs(
         [(args.allele, args.peptide)],
         mhc_pseudoseq_file=args.mhc_pseudoseq_file,
-    weights_dir=DEFAULT_WEIGHTS_DIR,
-    model_name=DEFAULT_MODEL_NAME,
+        weights_dir=DEFAULT_WEIGHTS_DIR,
+        model_name=DEFAULT_MODEL_NAME,
         batch_size=1,
     )
 

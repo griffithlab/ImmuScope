@@ -16,6 +16,11 @@ setup(
     license="GPL-3.0-only",
     packages=find_packages(exclude=("tests*", "weights*", "configs*")),
     include_package_data=True,
+    package_data={
+        "ImmuScope": [
+            "pseudosequence.2023.dat",
+        ],
+    },
     python_requires=">=3.9",
     install_requires=[
         "torch>=1.12",
