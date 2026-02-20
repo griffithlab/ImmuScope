@@ -19,11 +19,17 @@ setup(
     python_requires=">=3.9",
     install_requires=[
         "torch>=1.12",
+        "ruamel.yaml>=0.17.21"
     ],
     project_urls={
         "Upstream": "https://github.com/shenlongchen/ImmuScope",
         "Source": "https://github.com/griffithlab/ImmuScope",
         "Issues": "https://github.com/griffithlab/ImmuScope/issues",
+    },
+    entry_points={
+        "console_scripts": [
+            "immuscope-wrapper=ImmuScope.immuscope_wrapper:main",
+        ]
     },
     zip_safe=False
 )
