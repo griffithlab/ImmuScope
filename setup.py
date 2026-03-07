@@ -34,6 +34,7 @@ setup(
     entry_points={
         "console_scripts": [
             "immuscope-wrapper=ImmuScope.immuscope_wrapper:main",
+            "immuscope-download-weights=ImmuScope.download_weights:main",
         ]
     },
     zip_safe=False
