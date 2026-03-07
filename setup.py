@@ -18,7 +18,7 @@ setup(
     include_package_data=True,
     package_data={
         "ImmuScope": [
-            "pseudosequence.2023.dat",
+            "pseudosequence.pvac.dat",
         ],
     },
     python_requires=">=3.9",
