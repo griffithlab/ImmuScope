@@ -36,7 +36,9 @@ from ImmuScope.utils.data_utils import get_mhc_name_seq, get_peptide_embedding
 DEFAULT_WEIGHTS_DIR = "/opt/ImmuScope/weights"
 DEFAULT_MODEL_NAME = "ImmuScope-IM"
 DEFAULT_SCORE_COL = "ImmuScope_IM"
-DEFAULT_MHC_PSEUDOSEQ_FILE = str(Path(__file__).resolve().parent / "pseudosequence.2023.dat")
+DEFAULT_MHC_PSEUDOSEQ_FILE = str(
+    Path(__file__).resolve().parent / "pseudosequence.2023.dat"
+)
 
 
 @dataclass(frozen=True)
@@ -131,7 +133,9 @@ def score_pairs(
     # Prepare peptide embeddings (N, peptide_len + 2*pad)
     peptides = [pep for _, pep in pairs]
     pep_emb = np.asarray(
-        get_peptide_embedding(peptides, peptide_len=peptide_len, peptide_pad=peptide_pad),
+        get_peptide_embedding(
+            peptides, peptide_len=peptide_len, peptide_pad=peptide_pad
+        ),
         dtype=np.int64,
     )
 
@@ -220,9 +224,13 @@ def _read_pairs_tsv(
                 f"Need: {allele_col} and {peptide_col}."
             )
         if seq_num_col and seq_num_col not in reader.fieldnames:
-            raise ValueError(f"Input missing seq_num column '{seq_num_col}'. Found: {reader.fieldnames}.")
+            raise ValueError(
+                f"Input missing seq_num column '{seq_num_col}'. Found: {reader.fieldnames}."
+            )
         if start_col and start_col not in reader.fieldnames:
-            raise ValueError(f"Input missing start column '{start_col}'. Found: {reader.fieldnames}.")
+            raise ValueError(
+                f"Input missing start column '{start_col}'. Found: {reader.fieldnames}."
+            )
 
         for row in reader:
             allele = row[allele_col].strip()
@@ -305,24 +313,21 @@ def _write_bigmhc_style(
 def main(argv: Optional[Sequence[str]] = None) -> int:
     import argparse
 
-    p = argparse.ArgumentParser(description="Score peptide+allele pairs with ImmuScope-IM pretrained weights")
-
-    p.add_argument(
-        "--list-alleles",
-        action="store_true",
-        help=(
-            "List supported allele names (derived from the pseudosequence mapping file) and exit. "
-            "This doesn't require model weights."
-        ),
+    p = argparse.ArgumentParser(
+        description="Score peptide+allele pairs with ImmuScope-IM pretrained weights"
     )
 
     io = p.add_mutually_exclusive_group(required=False)
     io.add_argument("--input", help="Input TSV with columns for allele and peptide")
     io.add_argument("--allele", help="Allele for single-pair scoring")
 
-    p.add_argument("--peptide", help="Peptide for single-pair scoring (required with --allele)")
+    p.add_argument(
+        "--peptide", help="Peptide for single-pair scoring (required with --allele)"
+    )
     p.add_argument("--output", help="Output TSV (default: stdout for single pair)")
-    p.add_argument("--seq-num-col", default="seq_num", help="Input column name for seq_num")
+    p.add_argument(
+        "--seq-num-col", default="seq_num", help="Input column name for seq_num"
+    )
     p.add_argument("--start-col", default="start", help="Input column name for start")
 
     p.add_argument(
@@ -333,20 +338,15 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             "Default: bundled pseudosequence.2023.dat next to this wrapper."
         ),
     )
-    p.add_argument("--allele-col", default="allele", help="Allele column name in input TSV")
-    p.add_argument("--peptide-col", default="peptide", help="Peptide column name in input TSV")
+    p.add_argument(
+        "--allele-col", default="allele", help="Allele column name in input TSV"
+    )
+    p.add_argument(
+        "--peptide-col", default="peptide", help="Peptide column name in input TSV"
+    )
     p.add_argument("--batch-size", type=int, default=256)
 
     args = p.parse_args(list(argv) if argv is not None else None)
-
-    if args.list_alleles:
-        mhc_name_seq = get_mhc_name_seq(str(args.mhc_pseudoseq_file))
-        try:
-            for allele in sorted(mhc_name_seq.keys()):
-                print(allele)
-        except BrokenPipeError:
-            return 0
-        return 0
 
     if not args.input and not args.allele:
         p.error("one of the arguments --input --allele is required")
