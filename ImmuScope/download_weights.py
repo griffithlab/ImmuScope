@@ -103,5 +103,4 @@ def main() -> int:
 
     print("Done")
     print(f"Weights installed at: {dest}")
-    print("immuscope-wrapper will automatically look here by default.")
     return 0
