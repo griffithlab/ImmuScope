@@ -56,7 +56,7 @@ DEFAULT_WEIGHTS_DIR = default_weights_dir()
 DEFAULT_MODEL_NAME = "ImmuScope-IM"
 DEFAULT_SCORE_COL = "ImmuScope_IM"
 DEFAULT_MHC_PSEUDOSEQ_FILE = str(
-    Path(__file__).resolve().parent / "pseudosequence.2023.dat"
+    Path(__file__).resolve().parent / "pseudosequence.pvac.dat"
 )
 
 
