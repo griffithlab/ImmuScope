@@ -33,7 +33,26 @@ from ImmuScope.models.ImmuScope import ImmuScope
 from ImmuScope.utils.data_utils import get_mhc_name_seq, get_peptide_embedding
 
 
-DEFAULT_WEIGHTS_DIR = "/opt/ImmuScope/weights"
+def _default_user_weights_dir() -> str:
+    xdg_data_home = os.environ.get("XDG_DATA_HOME")
+    if xdg_data_home:
+        return str(Path(xdg_data_home) / "ImmuScope" / "weights")
+    return str(Path.home() / ".local" / "share" / "ImmuScope" / "weights")
+
+
+def default_weights_dir() -> str:
+    env_dir = os.environ.get("IMMU_SCOPE_WEIGHTS_DIR")
+    if env_dir:
+        return env_dir
+
+    user_dir = _default_user_weights_dir()
+    if (Path(user_dir) / "IM").is_dir():
+        return user_dir
+
+    return "/opt/ImmuScope/weights"
+
+
+DEFAULT_WEIGHTS_DIR = default_weights_dir()
 DEFAULT_MODEL_NAME = "ImmuScope-IM"
 DEFAULT_SCORE_COL = "ImmuScope_IM"
 DEFAULT_MHC_PSEUDOSEQ_FILE = str(
