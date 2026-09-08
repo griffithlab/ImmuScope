@@ -3,7 +3,8 @@
 This is intentionally implemented with stdlib-only dependencies so users can run
 it right after `pip install immuscope`.
 
-Default install location follows the XDG base directory spec:
+Default install location first uses the IMMU_SCOPE_WEIGHTS_DIR and then follows the XDG base directory spec:
+- $IMMU_SCOPE_WEIGHTS_DIR
 - $XDG_DATA_HOME/ImmuScope/weights
 - ~/.local/share/ImmuScope/weights
 
@@ -26,6 +27,9 @@ DEFAULT_URL = (
 
 
 def default_destination_dir() -> Path:
+    immu_scope_weights_dir = os.environ.get("IMMU_SCOPE_WEIGHTS_DIR")
+    if immu_scope_weights_dir:
+        return Path(immu_scope_weights_dir)
     xdg_data_home = os.environ.get("XDG_DATA_HOME")
     base = Path(xdg_data_home) if xdg_data_home else (Path.home() / ".local" / "share")
     return base / "ImmuScope" / "weights"
